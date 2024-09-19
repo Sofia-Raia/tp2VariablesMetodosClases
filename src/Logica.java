@@ -7,51 +7,107 @@ import static java.lang.Integer.parseInt;
 
 public class Logica {
 
-    private static Scanner l = new Scanner(System.in);
+    private static final Scanner l = new Scanner(System.in);
     private static FuncionesPrograma Funciones;
 
 
     public static void funCaste() {
-        System.out.println("Ingrese un valor decimal usando coma");
-        double var = l.nextDouble();
-        var = (short) var;
-        System.out.println("Valor convertido a short " + var);
-        var = (int) var;
-        System.out.println("Valor convertido a int " + var);
-        var = (long) var;
-        System.out.println("Valor convertido a long " + var);
-        String var1 = Double.toString(var);
-        System.out.println("Valor convertido a String " + var1);
-        var = (float) var;
-        System.out.println("Valor convertido a float " + var);
+        double valorDecimal;
+        String op;
+        
+        System.out.println("- CONVERSOR DE TIPO DE DATOS (CASTING) -");
+        
+        System.out.print("Ingrese un numero decimal (con punto): ");
+        valorDecimal = Double.parseDouble(l.nextLine());
+        
+        System.out.println("Seleccione a que tipo de dato quiere convertir:");
+        System.out.println("""
+                           1- Entero (Int)
+                           2- Entero corto (Short)
+                           3- Entero largo (Long)
+                           4- Real (Float)
+                           5- Cadena (String)""");
+        op = l.nextLine();
+        
+        switch (op) {
+            case "1":
+                int numInt = (int)valorDecimal;
+                System.out.println("El valor "+ valorDecimal + " convertido a entero es: " + numInt);
+                break;
+                
+            case "2":
+                short numShort = (short)valorDecimal;
+                System.out.println("El valor "+ valorDecimal + " convertido a entero corto es: " + numShort);
+                break;
+                
+            case "3":
+                long numLong = (long)valorDecimal;
+                System.out.println("El valor "+ valorDecimal + " convertido a entero largo es: " + numLong);
+                break;
+                
+            case "4":
+                float numFloat = (float)valorDecimal;
+                System.out.println("El valor "+ valorDecimal + " convertido a real es: " + numFloat);
+                break;
+                
+            case "5":
+                String cadena = String.valueOf(valorDecimal);
+                System.out.println("El valor "+ valorDecimal + " convertido a cadena es: " + cadena);
+                break;
+                
+            default:
+                System.out.println("Invalido");
+                
+        }
     }
-
-    //2 VARIABLE FUERA DE RANGO
-            /*Se produce un Overflow o desbordamiento, un byte va de -128 a 127
-            si yo le asigno el valor 130 se va a tratar de convertir a un numero
-            que este dentro del rango ej -125.
-            Para solucionar esto;
-            1. Verificación manual de los límites antes de la asignación.
-            2. Usar tipos de datos más grandes.
-            3. Uso de la clase Math para prevenir el overflow.
-            4. Usar tipos no primitivos (BigInteger o BigDecimal)
-     */
+    
+    public static void punto2 () {
+        
+        System.out.println(" Si se asigna un valor  a una variable fuera de rango (mayor de lo establecido) \n" +
+                           " ¿Qué ocurre? ¿Existe alguna forma de resolverlo?");
+        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("""
+                           Se produce un Overflow o desbordamiento, un byte va de -128 a 127
+                           si yo le asigno el valor 130 se va a tratar de convertir a un numero
+                           que este dentro del rango ej -125.
+                           
+                           Para solucionar esto:
+                           1. Verificación manual de los límites antes de la asignación.
+                           2. Usar tipos de datos más grandes.
+                           3. Uso de la clase Math para prevenir el overflow.
+                           4. Usar tipos no primitivos (BigInteger o BigDecimal)
+                           """);
+    }
+    
     //ejemplo del punto 2
     public static void verificacion() {
+        
         int val = 130;  // El valor que deseas asignar
+        
+        System.out.println("- VERIFICACIÓN 1 -");
+        System.out.println("-------------------------");
+        System.out.println("Ejemplo con numero 130:");
+        
         if (val < Byte.MIN_VALUE || val > Byte.MAX_VALUE) {
             System.out.println("El valor está fuera del rango permitido para byte");
         } else {
             byte b = (byte) val;
             System.out.println("El valor asignado es: " + b);
         }
-        ;
+        System.out.println();
     }
 
     //otro ejemplo del punto 2
     public static void verificacion1() {
-        BigInteger bigValue = new BigInteger("130");
-        System.out.println(bigValue);  // Imprime 130
+        
+        System.out.println("- VERFICACIÓN 2 -");
+        System.out.println("-------------------------");
+        System.out.println("""
+                           BigInteger bigValue = new BigInteger("130");
+                           System.out.println(bigValue); --> Imprime 130
+                           """);
+//        BigInteger bigValue = new BigInteger("130");
+//        System.out.println(bigValue);  // Imprime 130
     }
 
     public static void sum() {
@@ -79,7 +135,7 @@ public class Logica {
     public static void caja() {
 
         // Solicitar la cantidad de dinero
-        System.out.print("Ingrese la cantidad de dinero (por ejemplo, 1390.55): ");
+        System.out.print("Ingrese la cantidad de dinero (por ejemplo, 1390,55): ");
         double cantidad = l.nextDouble();
 
         // Separar la parte entera de la parte decimal
@@ -122,8 +178,12 @@ public class Logica {
     }
 
     public static void punto6() {
-        String cadena = "La lluvia en Mendoza es escasa";
-        System.out.println("La longitud de la cadena es de " + cadena.length() + " caracteres");
+        
+        String frase = "La lluvia en Mendoza es escasa";
+        
+        int tamañoFrase = frase.length();
+        
+        System.out.println("La frase: \"La lluvia en Mendoza es escasa\", tiene " + tamañoFrase + " caracteres");
     }
 
     public static void punto7() {
@@ -159,10 +219,38 @@ public class Logica {
         System.out.println("La nueva cadena es '"+cadena +"'");
     }
 
-    public static void punto9(){
-        String cadenaNueva, cadena = "La lluvia en Mendoza es escasa";
-        cadena = Arrays.toString(cadena.getBytes());
-        int i, longitud = cadena.length();
+   public static void punto9() {
+        
+        System.out.println("- CONVERSIÓN A CÓDIGO ASCII -");
+        
+        String frase = "La lluvia en Mendoza es escasa";
+        String ASCII = "";
+        String letras = "";
+        
+        int tamañoFrase = frase.length();
+        
+        for (int i = 0; i < tamañoFrase; i++) {
+            
+            char letra = frase.charAt(i);
+            
+            int codigoASCII = (int) letra;
+            
+            ASCII += codigoASCII + " ";
+            
+            if (codigoASCII < 10) {
+                letras += letra + " ";  // Si el código ASCII tiene 1 dígito
+            } else if (codigoASCII < 100) {
+                letras += letra + "  ";   // Si el código ASCII tiene 2 dígitos
+            } else {
+                letras += letra + "   ";    // Si el código ASCII tiene 3 dígitos
+            }
+        }
+ 
+        System.out.println("Si convertimos la frase: \"" + frase + "\" a código ASCII, nos quedaría: ");
+        System.out.println();
+        System.out.println(ASCII);
+        System.out.println(letras);
+        
     }
 
     public static void punto10(){
@@ -190,6 +278,7 @@ public class Logica {
     }
 
     public static void punto11(){
+        l.nextLine();
         String palabra1, palabra2;
         System.out.println("Ingrese 2 palabras: ");
         palabra1 = l.nextLine();
@@ -236,17 +325,27 @@ public class Logica {
             System.out.println("La cadena '" + cadena2 + "' no se encuentra dentro de la cadena '" + cadena1 + "'");
         }
     }
-
-    //14) Indique cual es la diferencia entre los datos primitivos (por valor) ejemplo el int
-    // y su contraparte por referencia ejemplo Integer.
-    /*
-    La diferencia es que los primitivos son tipos de datos y si no se les indica un valor se inicializan en 0
-    Los por referencia en valor, la contraparte de tipo objeto y si no los inicializamos por defecto son null.
-    Cualquiera de estos al no ser inicializados nos arrojan un error por consola del tipo Null Pointer Exception.
-     */
-    //15)Indique que sucede si realizo la siguiente declaración de variable:
-    //int numero = null; Me salta un error por consola.
-    //¿Qué debo modificar para poder asignar null a la variable? Debo cambiar de int a Integuer.
+    
+    public static void punto14 () {
+        
+        System.out.println(" Indique cual es la diferencia entre los datos primitivos (por valor) ejemplo el int" +
+                           " y su contraparte por referencia ejemplo Integer ");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("""
+                           La diferencia es que los primitivos son tipos de datos y si no se les indica un valor se inicializan en 0
+                           Los por referencia en valor, la contraparte de tipo objeto y si no los inicializamos por defecto son null.
+                           Cualquiera de estos al no ser inicializados nos arrojan un error por consola del tipo Null Pointer Exception.
+                           """);
+    }
+    
+    public static void punto15() {
+        
+        System.out.println("Indique que sucede si realizo la siguiente declaración de variable: ");
+        System.out.println("int numero = null --> Me salta un error por consola.");
+        System.out.println("---------------------------------------------------------");
+        System.out.println("¿Qué debo modificar para poder asignar null a la variable?");
+        System.out.println("Debo cambiar de int a Integuer.");
+    }
 
     public static void punto16(){
         Double doubleObj = 0.0;
@@ -275,36 +374,68 @@ public class Logica {
     }
 
     public static void punto21() {
-        System.out.println("Ingrese un n° entero mayor a 0");
-        int n = l.nextInt();
+        
+        int n;
+        
+        do { 
+            System.out.println("Ingrese un n° entero mayor a 0");
+            n = l.nextInt();
+        } while (n <= 0);
+        
+        int suma = n;
+        
         System.out.print(n + " + ");
         for (int i = n; i > 1; i--) {
-            n = n - 1;
+            n--;
+            suma += n;
             if (n != 1) {
                 System.out.print(n + " + ");
             } else {
-                System.out.print(n);
+                System.out.print(n + " = " + suma);
             }
         }
+        
+        
     }
 
     public static void punto22() {
-        System.out.println("Ingrese dígitos para ser sumados +++");
-        String imput = l.nextLine();
-        for (int i = 0; i < imput.length(); i++) {
-            if (i > 0) {
-                System.out.print(" + ");
-            }
-            System.out.print(imput.charAt(i));
-        }
-    }
+        
+        System.out.print("Ingrese un número entero para sumar sus digitos: ");
+        int num = l.nextInt();
 
-    public static void punto23() {
-        System.out.println("Ingrese un texto");
-        String imput = l.nextLine();
-        for (int i = imput.length() - 1; i >= 0; i--) {
-            System.out.print(imput.charAt(i));
+        // Variables para la cadena y el cálculo de la suma
+        int suma = 0;
+        String resultado = "";
+
+        // Construir la cadena y calcular la suma
+        while (num > 0) {
+            int digito = num % 10; // Obtener el último dígito
+            suma += digito; // Sumar el dígito a la suma
+            
+            if (resultado.isEmpty()) {
+                resultado = digito + "";
+            } else {
+                resultado = digito + " + " + resultado;
+            }
+            
+            num /= 10; // Eliminar el último dígito
         }
+
+        // Mostrar el resultado
+        System.out.println(resultado + " = " + suma);
+    }
+    
+    public static void punto23() {
+        
+        System.out.println("Ingrese un texto");
+        String cadena = l.nextLine();
+        
+        System.out.println("El texto invertido queda: ");
+        
+        for (int i = cadena.length() - 1; i >= 0; i--) {
+            System.out.print(cadena.charAt(i));
+        }
+        System.out.println();
     }
 
 }
